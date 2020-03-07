@@ -24,6 +24,8 @@
           </resource>
         </resources>
         
+        <finalName>system-testing</finalName>
+         
         <plugins>
              <!-- JDK 및  UTF-8 인코딩 지정 방법 -->
             <plugin>
@@ -92,6 +94,9 @@
                      <descriptorRefs>
                          <descriptorRef>jar-with-dependencies</descriptorRef>
                      </descriptorRefs>
+                     <!-- jar-with-dependencies 붙이기 싫다면 세팅 -->
+                     <appendAssemblyId>false</appendAssemblyId>
+                     <finalName>custom-name</finalName>
                  </configuration>
                  <executions>
                   <execution>
