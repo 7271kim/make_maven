@@ -16,7 +16,14 @@
     <build>
         <!-- JAVA 소스 위치 설정, 여러군데 위치할 시 Plugin에서 세팅 -->
         <sourceDirectory>src/main/java</sourceDirectory>
-
+        
+        <!-- 리소스 자원 위치 세팅  -->
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+          </resource>
+        </resources>
+        
         <plugins>
              <!-- JDK 및  UTF-8 인코딩 지정 방법 -->
             <plugin>
@@ -44,7 +51,7 @@
                         <configuration>
                             <sources>
                                 <source>src/main/java</source>
-                                <source>others/src</source>
+                                <!-- <source>others/src</source> -->
                             </sources>
                         </configuration>
                     </execution>
@@ -66,15 +73,16 @@
                      </archive>
                      <!-- 패키징시 특정 파일 제거 -->
                      <excludes>
-                          <exclude>*.properties</exclude>
+                          <!-- <exclude>*.properties</exclude> -->
                       </excludes>
                  </configuration>
              </plugin>
              
-             <!-- 의존성 jar 하나로 패키징 시 ( 아래 것으로 대체 )-->
-             <!-- 
+             <!-- 의존성 jar 하나로 패키징 시 -->
+             
              <plugin>
                  <artifactId>maven-assembly-plugin</artifactId>
+                 <version>3.2.0</version>
                  <configuration>
                      <archive>
                          <manifest>
@@ -85,8 +93,17 @@
                          <descriptorRef>jar-with-dependencies</descriptorRef>
                      </descriptorRefs>
                  </configuration>
+                 <executions>
+                  <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                      <goal>single</goal>
+                    </goals>
+                  </execution>
+                </executions>
              </plugin>
-             -->
+            
              <!-- 의존 관계에 있는 모든 jar파일을 /lib아래 폴더로 복사 -->
              <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
@@ -126,8 +143,7 @@
                                     <directory>${project.basedir}/resources</directory>
                                     <filtering>false</filtering>
                                     <includes>
-                                        <include>map/**</include>
-                                        <include>properties/**</include>
+                                        <include>config/**</include>
                                     </includes>
                                 </resource>
                             </resources>
