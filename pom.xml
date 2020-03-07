@@ -3,7 +3,7 @@
     <groupId>make_java_app</groupId>
     <artifactId>com.seokjin.make</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>make-everyThing</name>
+    <name>make-everything</name>
     <description>For ecomomy</description>
     
     <repositories> 
@@ -24,7 +24,7 @@
           </resource>
         </resources>
         
-        <finalName>system-testing</finalName>
+        <finalName>${project.name}</finalName>
          
         <plugins>
              <!-- JDK 및  UTF-8 인코딩 지정 방법 -->
@@ -81,7 +81,6 @@
              </plugin>
              
              <!-- 의존성 jar 하나로 패키징 시 -->
-             
              <plugin>
                  <artifactId>maven-assembly-plugin</artifactId>
                  <version>3.2.0</version>
@@ -96,7 +95,7 @@
                      </descriptorRefs>
                      <!-- jar-with-dependencies 붙이기 싫다면 세팅 -->
                      <appendAssemblyId>false</appendAssemblyId>
-                     <finalName>custom-name</finalName>
+                     <finalName>${project.name}-single-App</finalName>
                  </configuration>
                  <executions>
                   <execution>
