@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>make_java_app</groupId>
+    <artifactId>com.seokjin.make</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>make-everyThing</name>
+    <description>For ecomomy</description>
+    
+    <repositories> 
+        <repository> 
+            <id>central</id> 
+            <url>https://repo1.maven.org/maven2/</url> 
+         </repository> 
+    </repositories>
+    
+    <build>
+        <!-- JAVA 소스 위치 설정, 여러군데 위치할 시 Plugin에서 세팅 -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+
+        <plugins>
+             <!-- JDK 및  UTF-8 인코딩 지정 방법 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            
+            <!-- JAVA 소스 여려개 일 시 설정 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source-dir</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java</source>
+                                <source>others/src</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- MANIFEST 설정 -->
+            <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+                 <version>3.2.0</version>
+                 <configuration>
+                     <archive>
+                         <manifest>
+                             <addClasspath>true</addClasspath>
+                             <classpathPrefix>lib/</classpathPrefix>
+                             <mainClass>com.seokjin.makemaven.Main</mainClass>
+                         </manifest>
+                     </archive>
+                     <!-- 패키징시 특정 파일 제거 -->
+                     <excludes>
+                          <exclude>*.properties</exclude>
+                      </excludes>
+                 </configuration>
+             </plugin>
+             
+             <!-- 의존성 jar 하나로 패키징 시 ( 아래 것으로 대체 )-->
+             <!-- 
+             <plugin>
+                 <artifactId>maven-assembly-plugin</artifactId>
+                 <configuration>
+                     <archive>
+                         <manifest>
+                             <Main-Class>com.seokjin.makemaven.Main</Main-Class>
+                         </manifest>
+                     </archive>
+                     <descriptorRefs>
+                         <descriptorRef>jar-with-dependencies</descriptorRef>
+                     </descriptorRefs>
+                 </configuration>
+             </plugin>
+             -->
+             <!-- 의존 관계에 있는 모든 jar파일을 /lib아래 폴더로 복사 -->
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-dependency-plugin</artifactId>
+                 <version>3.1.1</version>
+                 <executions>
+                     <execution>
+                         <id>copy-dependencies</id>
+                         <phase>package</phase>
+                         <goals>
+                             <goal>copy-dependencies</goal>
+                         </goals>
+                         <configuration>
+                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                             <overWriteIfNewer>true</overWriteIfNewer>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
+             
+              <!-- 특정 리소스를 지정된 경로로 복사시 -->
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/classes/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/resources</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>map/**</include>
+                                        <include>properties/**</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+  
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+    </dependencies>
+</project>
