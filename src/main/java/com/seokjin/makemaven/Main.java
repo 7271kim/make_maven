@@ -24,12 +24,15 @@ public class Main {
         /*
         3. 원하는 객체로  API 서버에서 데이터 받아오기
         List<Disclousure> disLit = HttpClientCustom.getHttpGetListObjectDartApiData("https://opendart.fss.or.kr/api/list.json", "20180117", "20200117", Disclousure.class);
-         for (int index = 0; index < disLit.size(); index++) {
+        for (int index = 0; index < disLit.size(); index++) {
             
             Disclousure temp = disLit.get(index);
             System.out.println(temp.getCorp_name());
         }
         */
+        
+        /*
+        4. 멀티 쓰레드 환경에서 테스트 
         
         long start = System.currentTimeMillis();
         
@@ -66,24 +69,12 @@ public class Main {
             }
         });
        
-        /*for (int index2 = 0; index2 < 3; index2++) {
-            List<Disclousure> disLit = HttpClientCustom.getHttpGetListObjectDartApiData("https://opendart.fss.or.kr/api/list.json", "20180117", "20200117","웹바이오텍", Disclousure.class);
-            System.out.println("2번 시작!!!!!!!!!!!!!!!!!!!!!!!!!");
-            for (int index = 0; index < disLit.size(); index++) {
-               Disclousure temp = disLit.get(index);
-               //System.out.println(temp.getCorp_name());
-               //System.out.println(temp.getReport_nm());
-           }
-            System.out.println("2번 끝!!!!!!!!!!!!!!!!!!!!!!!!!");
-            long end = System.currentTimeMillis();
-            System.out.println("속도 측정!!!!!!!!!!!!!!!!!!!");
-            System.out.println(end - start);
-        }*/
         
         thread1.start();
         thread2.start();
+        */
         
-        
+       
     }
 
 }
