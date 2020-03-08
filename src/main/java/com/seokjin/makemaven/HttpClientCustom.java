@@ -70,11 +70,16 @@ public class HttpClientCustom {
     public static HttpClient getInstance() {
         return HTTP_CLIENT;
     }
-
-    public static String getHttpGetStringApiData( String url, String startDate, String endDate ) {
+    
+    
+    public static String getHttpGetStringApiData( String url ) {
+        return getHttpGetStringApiDataWithParam(url, Collections.EMPTY_MAP);
+    }
+    
+    public static String getHttpGetStringApiDataWithParam( String url, Map<String, String> params ) {
         String result = "";
-        url = getParamToString(url, startDate, endDate);
         try{
+            url = getParamToString(url, params);
             HttpEntity httpEntity = getEntity(url);
             if( httpEntity != null ) {
                 result = EntityUtils.toString(httpEntity);
@@ -82,6 +87,24 @@ public class HttpClientCustom {
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        
+        return result;
+    }
+    
+    public static String getHttpGetStringDartApiData( String url, String startDate, String endDate, String company ) {
+        String result = "";
+        Map<String, String> params = new HashMap<>();
+        String crtfc_key    = GetProperties.getSecureValue("API_KEY_DART");
+        String corp_code    = GetProperties.getSecureValue(company);
+        params.put("bgn_de", startDate);
+        params.put("end_de", endDate);
+        params.put("page_no", "1");
+        params.put("page_count", "100");
+        params.put("last_reprt_at", "Y");
+        params.put("crtfc_key", crtfc_key);
+        params.put("corp_code", corp_code);
+         
+        result = getHttpGetStringApiDataWithParam(url, params);
         
         return result;
     }
@@ -118,19 +141,8 @@ public class HttpClientCustom {
         
     }
     
-    private static String getParamToString( String url, String startDate, String endDate ) {
+    private static String getParamToString( String url, Map<String, String> params ) {
         String resultUrl = "";
-        Map<String, String> params = new HashMap<>();
-        String crtfc_key    = GetProperties.getSecureValue("API_KEY_DART");
-        String corp_code    = GetProperties.getSecureValue("samsung_corp_code");
-        params.put("bgn_de", startDate);
-        params.put("end_de", endDate);
-        params.put("page_no", "1");
-        params.put("page_count", "100");
-        params.put("last_reprt_at", "Y");
-        params.put("crtfc_key", crtfc_key);
-        params.put("corp_code", corp_code);
-        
         try {
             URIBuilder uri = new URIBuilder(new URI(url));
             for (String key : params.keySet()) {
@@ -145,9 +157,9 @@ public class HttpClientCustom {
         return resultUrl;
     }
     
-    public static <T> List<T> getHttpGetListObjectApiData( String url, String startDate, String endDate, Class<T> model ) {
+    public static <T> List<T> getHttpGetListObjectDartApiData( String url, String startDate, String endDate, String company, Class<T> model ) {
         List<T> result = Collections.EMPTY_LIST;
-        String apiData = getHttpGetStringApiData(url, startDate, endDate);
+        String apiData = getHttpGetStringDartApiData(url, startDate, endDate, company);
         JsonElement jsonElement = JsonParser.parseString(apiData);
         JsonObject jobject = jsonElement.getAsJsonObject();
         JsonArray list  = jobject.getAsJsonArray("list");
