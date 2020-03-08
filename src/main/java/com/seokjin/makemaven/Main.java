@@ -1,21 +1,11 @@
 package com.seokjin.makemaven;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import org.apache.commons.lang3.StringUtils;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        boolean isTrue = StringUtils.isNotBlank("aaaaaaaa");
-        String name = "config/config.properties"; 
-        // Resorce 하위 propertiese들 읽기
-        InputStream inputStream = ClassLoader.getSystemClassLoader().getSystemResourceAsStream(name);
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        System.out.println(properties);
+    public static void main(String[] args) {
+        String dartUrl = "https://opendart.fss.or.kr/api/corpCode.xml?crtfc_key="+GetProperties.getSecureValue("API_KEY_DART");
+        // API서버에서 고유 번호 Zip파일 받아오기. 좀 오래걸램. 
+        HttpClientCustom.getHttpGetStremApiData(dartUrl,"C:\\Users\\Jin\\Desktop\\zzz\\corpCode.zip");
     }
 
 }
