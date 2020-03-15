@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.nodes.Document;
+
 import com.seokjin.kim.library.GetProperties;
 import com.seokjin.kim.library.HttpClientCustom;
+import com.seokjin.kim.library.JsoupCustom;
 import com.seokjin.model.Disclousure;
 
 public class Main {
@@ -24,7 +27,8 @@ public class Main {
         params.put("crtfc_key", crtfc_key);
         params.put("corp_code", corp_code);
         try {
-            String getDisclosureSearch  =  HttpClientCustom.getHttpGetStringApiData("https://opendart.fss.or.kr/api/list.json", params);
+            Document zzz = JsoupCustom.getGetDocumentFromURL("honbabzon.com");
+            String getDisclosureSearch  =  HttpClientCustom.getStringApiDataWithParamDoGet("https://opendart.fss.or.kr/api/list.json", params);
             List<Disclousure> disLit = HttpClientCustom.getHttpGetListObjectApiData("https://opendart.fss.or.kr/api/list.json", params, Disclousure.class);
             System.out.println(getDisclosureSearch);
         } catch (Exception e) {
