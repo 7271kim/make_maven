@@ -1,14 +1,5 @@
 package com.seokjin.makemaven;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import com.seokjin.kim.library.GetProperties;
-import com.seokjin.kim.library.HttpClientCustom;
-import com.seokjin.model.Disclousure;
-
 public class Main {
 
     public static void main(String[] args) {
