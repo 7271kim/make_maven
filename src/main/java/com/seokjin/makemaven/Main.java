@@ -12,7 +12,6 @@ import com.seokjin.model.Disclousure;
 public class Main {
 
     public static void main(String[] args) {
-      
         /*
         1. API서버에서 고유 번호 Zip파일 받아서 원하는 곳에 zip 만들기. => 서버 다운로드 조금 오래걸림
         Properties secuore = GetProperties.getProperties("config/secure.properties");
@@ -29,7 +28,7 @@ public class Main {
        
        /*
         2. String 으로 API 서버에서 데이터 받아오기
-         Properties secuore = GetProperties.getProperties("config/secure.properties");
+        Properties secuore = GetProperties.getProperties("config/secure.properties");
         String url = "https://opendart.fss.or.kr/api/list.json";
         Map<String, String> params = new HashMap<String, String>();
         params.put("crtfc_key", secuore.getProperty("API_KEY_DART"));
