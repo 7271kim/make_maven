@@ -1,8 +1,37 @@
 package com.seokjin.makemaven;
 
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.seokjin.kim.library.JsoupCustom;
+
 public class Main {
 
     public static void main(String[] args) {
+        Document doc = JsoupCustom.getGetDocumentFromXML("C:\\Users\\King\\Desktop\\dart\\sss.xml");
+        NodeList resultChild = doc.getChildNodes().item(0).getChildNodes();
+        
+        for (int index = 0; index < resultChild.getLength(); index++) {
+            NodeList listChild = resultChild.item(index).getChildNodes();
+            String code          = "";
+            String companyName   = "";
+            String modifyDate    = "";
+            for (int index2 = 0; index2 < listChild.getLength(); index2++) {
+                Node item = listChild.item(index2);
+                String name = item.getNodeName();
+                if( StringUtils.isNotBlank(name) ) {
+                    if( name.equals("corp_name") ) {
+                        companyName = item.getTextContent();
+                    } else if( name.equals("corp_code")  ) {
+                        code = item.getTextContent();
+                    } else if (name.equals("modify_date")) {
+                        modifyDate = item.getTextContent();
+                    }
+                }
+            }
+        }
         /*
         1. API서버에서 고유 번호 Zip파일 받아서 원하는 곳에 zip 만들기. => 서버 다운로드 조금 오래걸림
         Properties secuore = GetProperties.getProperties("config/secure.properties");
